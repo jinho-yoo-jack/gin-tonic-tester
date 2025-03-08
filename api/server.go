@@ -2,17 +2,20 @@ package api
 
 import (
 	"ginTonicProject/config"
+	"ginTonicProject/controller"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"net/http"
 )
 
 type Server struct {
 	config config.Config
+	db     *gorm.DB
 	router *gin.Engine
 }
 
-func NewServer(config config.Config) (*Server, error) {
-	server := &Server{config: config}
+func NewServer(config config.Config, db *gorm.DB) (*Server, error) {
+	server := &Server{config: config, db: db}
 	server.setupRouter()
 	return server, nil
 }
@@ -27,6 +30,8 @@ func (s *Server) setupRouter() {
 	router.POST("/env", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"env": s.config.Environment})
 	})
+
+	router.POST("/signup", controller.SignUp)
 
 	s.router = router
 }

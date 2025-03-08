@@ -2,3 +2,15 @@
 POST http://localhost:8080/env
 
 ###
+
+### POST SINGUP
+POST http://localhost:8080/signup
+Content-Type: application/json
+
+{
+  "user_id": "jack",
+  "password": "yoo",
+  "nick_name": "black"
+}
+
+###

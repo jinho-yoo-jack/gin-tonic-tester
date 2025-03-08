@@ -3,6 +3,7 @@ package main
 import (
 	"ginTonicProject/api"
 	"ginTonicProject/config"
+	"gorm.io/gorm"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -69,12 +70,8 @@ func setupRouter() *gin.Engine {
 	return r
 }
 
-func newServer() *api.Server {
-	c, err := config.LoadConfig(".")
-	if err != nil {
-		panic(err)
-	}
-	server, err := api.NewServer(c)
+func newServer(c config.Config, db *gorm.DB) *api.Server {
+	server, err := api.NewServer(c, db)
 	if err != nil {
 		panic(err)
 	}
@@ -82,9 +79,14 @@ func newServer() *api.Server {
 }
 
 func main() {
-	s := newServer()
-	s.Start(":8080")
-	//r := setupRouter()
-	// Listen and Server in 0.0.0.0:8080
-	//r.Run(":8080")
+	c, err := config.LoadConfig(".")
+	if err != nil {
+		panic(err)
+	}
+	config.Connect(c)
+	s := newServer(c, config.DB)
+	err = s.Start(":8080")
+	if err != nil {
+		return
+	}
 }
