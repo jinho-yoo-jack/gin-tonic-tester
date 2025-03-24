@@ -1,7 +1,7 @@
-package controller
+package handler
 
 import (
-	"ginTonicProject/model"
+	"ginTonicProject/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -19,16 +19,7 @@ func SignUp(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
-	user := model.User{}
-	user.UserId = req.UserId
-	user.Password = req.Password
-	user.NickName = req.NickName
-	user.Role = 1
-
-	savedUser, err := user.Save()
-	if err != nil {
-		panic(err)
-	}
-	c.JSON(http.StatusOK, gin.H{"user": savedUser})
-
+	c.JSON(http.StatusOK, gin.H{"user": service.SignUp(
+		service.UserInfo{UserId: req.UserId, Password: req.Password, NickName: req.NickName, Role: 1})},
+	)
 }

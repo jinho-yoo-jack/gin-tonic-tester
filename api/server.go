@@ -2,7 +2,7 @@ package api
 
 import (
 	"ginTonicProject/config"
-	"ginTonicProject/controller"
+	"ginTonicProject/handler"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"net/http"
@@ -31,7 +31,7 @@ func (s *Server) setupRouter() {
 		c.JSON(http.StatusOK, gin.H{"env": s.config.Environment})
 	})
 
-	router.POST("/signup", controller.SignUp)
+	router.POST("/signup", handler.SignUp)
 
 	s.router = router
 }
