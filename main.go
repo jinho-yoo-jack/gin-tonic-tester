@@ -71,11 +71,11 @@ func setupRouter() *gin.Engine {
 }
 
 func newServer(c config.Config, db *gorm.DB) *server.Server {
-	server, err := server.NewServer(c, db)
+	s, err := server.NewServer(c, db)
 	if err != nil {
 		panic(err)
 	}
-	return server
+	return s
 }
 
 func main() {
