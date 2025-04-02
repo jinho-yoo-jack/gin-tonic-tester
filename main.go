@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ginTonicProject/api"
 	"ginTonicProject/config"
+	"ginTonicProject/server"
 	"gorm.io/gorm"
 	"net/http"
 
@@ -70,8 +70,8 @@ func setupRouter() *gin.Engine {
 	return r
 }
 
-func newServer(c config.Config, db *gorm.DB) *api.Server {
-	server, err := api.NewServer(c, db)
+func newServer(c config.Config, db *gorm.DB) *server.Server {
+	server, err := server.NewServer(c, db)
 	if err != nil {
 		panic(err)
 	}

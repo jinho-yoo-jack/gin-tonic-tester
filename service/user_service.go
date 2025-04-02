@@ -13,11 +13,7 @@ type UserInfo struct {
 
 func SignUp(u UserInfo) *model.User {
 
-	user := model.User{}
-	user.UserId = u.UserId
-	user.Password = u.Password
-	user.NickName = u.NickName
-	user.Role = 1
+	user := model.User{UserId: u.UserId, Password: u.Password, NickName: u.NickName, Role: 1}
 
 	savedUser, err := user.Save()
 	if err != nil {

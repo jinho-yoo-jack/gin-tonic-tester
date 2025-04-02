@@ -12,7 +12,7 @@ type RequestSignUp struct {
 	NickName string `json:"nick_name" binding:"required"`
 }
 
-func SignUp(c *gin.Context) {
+func SignUpHandler(c *gin.Context) {
 	var req RequestSignUp
 
 	if err := c.ShouldBindJSON(&req); err != nil {
