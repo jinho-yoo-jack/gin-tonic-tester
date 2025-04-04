@@ -5,9 +5,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func UserRouters(router *gin.Engine) {
+type UserRouter struct {
+	userHandler *handler.UserHandler
+}
+
+func (r *UserRouter) UserRouters(router *gin.Engine) {
 	userGroup := router.Group("/auth")
 	{
-		userGroup.POST("/signup", handler.SignUpHandler)
+		userGroup.POST("/signup", r.userHandler.SignUpHandler)
 	}
 }

@@ -11,7 +11,13 @@ type UserInfo struct {
 	Role     int
 }
 
-func SignUp(u UserInfo) *model.User {
+type UserService struct{}
+
+func NewUserService() *UserService {
+	return &UserService{}
+}
+
+func (s *UserService) SignUp(u UserInfo) *model.User {
 
 	user := model.User{UserId: u.UserId, Password: u.Password, NickName: u.NickName, Role: 1}
 
