@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"ginTonicProject/config"
@@ -8,12 +8,12 @@ import (
 )
 
 type Server struct {
-	config config.Config
+	config *config.Config
 	db     *gorm.DB
 	router *gin.Engine
 }
 
-func NewServer(config config.Config, db *gorm.DB) (*Server, error) {
+func NewServer(config *config.Config, db *gorm.DB) (*Server, error) {
 	server := &Server{config: config, db: db}
 	server.setupRouter()
 	return server, nil

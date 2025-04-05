@@ -1,7 +1,11 @@
 package config
 
 import (
+	"fmt"
+	"ginTonicProject/utils"
 	"github.com/spf13/viper"
+	"log"
+	"path/filepath"
 )
 
 type Config struct {
@@ -12,17 +16,31 @@ type Config struct {
 	MysqlDbname   string `mapstructure:"MYSQL_DBNAME"`
 }
 
-func LoadConfig(path string) (config Config, error error) {
-	viper.AddConfigPath(path)
-	viper.SetConfigName("app")
-	viper.SetConfigType("env")
-
-	viper.AutomaticEnv()
-	err := viper.ReadInConfig()
+func MustLoadConfig() *Config {
+	cfg, err := LoadConfig()
 	if err != nil {
-		return
+		log.Fatalf("failed to load config: %v", err)
+	}
+	return cfg
+}
+
+func LoadConfig() (*Config, error) {
+	projectRoot, err := utils.FindProjectRootFromGoMod()
+	if err != nil {
+		return nil, err
 	}
 
-	err = viper.Unmarshal(&config)
-	return
+	viper.SetConfigFile(filepath.Join(projectRoot, "app.env"))
+	viper.SetConfigType("env")
+	viper.AutomaticEnv() // 환경변수 우선
+
+	if err := viper.ReadInConfig(); err != nil {
+		return nil, fmt.Errorf("config load error: %w", err)
+	}
+
+	var cfg Config
+	if err := viper.Unmarshal(&cfg); err != nil {
+		return nil, fmt.Errorf("config unmarshal error: %w", err)
+	}
+	return &cfg, nil
 }

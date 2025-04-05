@@ -16,8 +16,8 @@ type User struct {
 }
 
 func (u *User) Save() (*User, error) {
-
 	var err error
+
 	err = config.DB.Create(&u).Error
 	if err != nil {
 		return &User{}, err
