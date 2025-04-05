@@ -7,14 +7,19 @@
 package injector
 
 import (
+	"ginTonicProject/config"
 	"ginTonicProject/handler"
+	"ginTonicProject/repository"
 	"ginTonicProject/service"
 )
 
 // Injectors from wire.go:
 
 func InitializeUserHandler() *handler.UserHandler {
-	userService := service.NewUserService()
+	configConfig := config.MustLoadConfig()
+	db := config.InitDB(configConfig)
+	userRepository := repository.NewUserRepository(db)
+	userService := service.NewUserService(userRepository)
 	userHandler := handler.NewUserHandler(userService)
 	return userHandler
 }

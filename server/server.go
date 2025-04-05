@@ -1,11 +1,10 @@
-package server
+package main
 
 import (
 	"ginTonicProject/config"
-	"ginTonicProject/injector"
+	"ginTonicProject/routes"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"net/http"
 )
 
 type Server struct {
@@ -22,17 +21,8 @@ func NewServer(config config.Config, db *gorm.DB) (*Server, error) {
 
 func (s *Server) setupRouter() {
 	router := gin.Default()
-	userHandler := injector.InitializeUserHandler()
-
-	router.POST("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
-	})
-
-	router.POST("/env", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"env": s.config.Environment})
-	})
-
-	router.POST("/auth", userHandler.SignUpHandler)
+	routes.HealthcheckRouters(router)
+	routes.UserRouters(router)
 
 	s.router = router
 }
