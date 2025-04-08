@@ -4,18 +4,18 @@
 //go:build !wireinject
 // +build !wireinject
 
-package injector
+package di
 
 import (
+	"github.com/google/wire"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/config"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/handler"
-	"github.com/jinho-yoo-jack/gin-tonic-tester/middlewares"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/internal/middlewares"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/internal/utils"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/repository"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/routes"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/server"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/service"
-	"github.com/jinho-yoo-jack/gin-tonic-tester/utils"
-	"github.com/google/wire"
 )
 
 // Injectors from wire.go:

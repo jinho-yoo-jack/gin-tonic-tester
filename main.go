@@ -1,12 +1,12 @@
 package main
 
 import (
-	"github.com/jinho-yoo-jack/gin-tonic-tester/injector"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/internal/di"
 	"log"
 )
 
 func main() {
-	server, err := injector.InitializeServer()
+	server, err := di.InitializeServer()
 	if err != nil {
 		log.Fatal("failed to initialize server:", err)
 	}

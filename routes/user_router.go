@@ -6,7 +6,7 @@ import (
 )
 
 //func UserRouters(router *gin.Engine, authorize gin.HandlerFunc) {
-//	userHandler := injector.InitializeUserHandler()
+//	userHandler := di.InitializeUserHandler()
 //	api := router.Group("/api/v1/auth")
 //	api.Use(authorize)
 //	{

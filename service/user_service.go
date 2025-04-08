@@ -3,9 +3,9 @@ package service
 import (
 	"database/sql"
 	"fmt"
+	utils2 "github.com/jinho-yoo-jack/gin-tonic-tester/internal/utils"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/model/entity"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/repository"
-	"github.com/jinho-yoo-jack/gin-tonic-tester/utils"
 )
 
 type UserInfo struct {
@@ -22,15 +22,15 @@ type SignInDto struct {
 
 type UserService struct {
 	userRepository *repository.UserRepository
-	jwtUtils       *utils.JwtUtils
+	jwtUtils       *utils2.JwtUtils
 }
 
-func NewUserService(ur *repository.UserRepository, ju *utils.JwtUtils) *UserService {
+func NewUserService(ur *repository.UserRepository, ju *utils2.JwtUtils) *UserService {
 	return &UserService{ur, ju}
 }
 
 func (s *UserService) SignUp(u UserInfo) *entity.Member {
-	encryptedPassword, err := utils.EncryptPassword(u.Password)
+	encryptedPassword, err := utils2.EncryptPassword(u.Password)
 	user := entity.Member{
 		UserId:   u.UserId,
 		Password: encryptedPassword,
@@ -49,7 +49,7 @@ func (s *UserService) SignIn(signDto SignInDto) string {
 	if err != nil {
 		panic(err)
 	}
-	if isValid := utils.VerifyPassword(m.Password, signDto.Password); !isValid {
+	if isValid := utils2.VerifyPassword(m.Password, signDto.Password); !isValid {
 		token, err := s.jwtUtils.GenerateToken(m.UserId)
 		if err != nil {
 			fmt.Println(err)
