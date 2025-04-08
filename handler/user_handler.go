@@ -2,7 +2,7 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"mark99/service"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/service"
 	"net/http"
 )
 

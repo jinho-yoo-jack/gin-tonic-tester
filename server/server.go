@@ -2,10 +2,10 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/config"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/routes"
 	"gorm.io/gorm"
 	"log"
-	"mark99/config"
-	"mark99/routes"
 )
 
 type Server struct {

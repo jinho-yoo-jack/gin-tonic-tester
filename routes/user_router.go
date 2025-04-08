@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"mark99/handler"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/handler"
 )
 
 //func UserRouters(router *gin.Engine, authorize gin.HandlerFunc) {

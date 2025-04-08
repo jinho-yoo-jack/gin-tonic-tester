@@ -2,7 +2,7 @@ package utils
 
 import (
 	"github.com/golang-jwt/jwt/v5"
-	"mark99/config"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/config"
 	"time"
 )
 

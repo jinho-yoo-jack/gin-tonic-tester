@@ -1,8 +1,8 @@
 package repository
 
 import (
+	"github.com/jinho-yoo-jack/gin-tonic-tester/model/entity"
 	"gorm.io/gorm"
-	"mark99/model/entity"
 )
 
 type UserRepository struct {

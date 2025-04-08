@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/jinho-yoo-jack/gin-tonic-tester/injector"
 	"log"
-	"mark99/injector"
 )
 
 func main() {

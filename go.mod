@@ -1,4 +1,4 @@
-module mark99
+module github.com/jinho-yoo-jack/gin-tonic-tester
 
 go 1.23.0
 

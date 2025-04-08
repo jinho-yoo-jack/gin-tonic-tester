@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
-	"mark99/config"
-	"mark99/model"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/config"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/model"
 	"net/http"
 	"strings"
 )

@@ -5,14 +5,14 @@ package injector
 
 import (
 	"github.com/google/wire"
-	"mark99/config"
-	"mark99/handler"
-	"mark99/middlewares"
-	"mark99/repository"
-	"mark99/routes"
-	"mark99/server"
-	"mark99/service"
-	"mark99/utils"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/config"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/handler"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/middlewares"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/repository"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/routes"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/server"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/service"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/utils"
 )
 
 var ConfigSet = wire.NewSet(

@@ -3,9 +3,9 @@ package service
 import (
 	"database/sql"
 	"fmt"
-	"mark99/model/entity"
-	"mark99/repository"
-	"mark99/utils"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/model/entity"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/repository"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/utils"
 )
 
 type UserInfo struct {
