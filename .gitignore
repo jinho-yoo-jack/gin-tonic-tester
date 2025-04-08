@@ -1,0 +1,8 @@
+/bin/
+/pkg/
+/*.exe
+/*.out
+/*.test
+/*.sh
+
+/.idea/

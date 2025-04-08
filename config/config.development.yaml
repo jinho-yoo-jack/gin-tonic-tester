@@ -1,0 +1,7 @@
+mysql_host: localhost:13306
+mysql_username: tony
+mysql_password: edith
+mysql_dbname: stark_industry
+secret_key: kfwFzvL9zQOmcDC3XBlK2bX4b0lv1u7VGJcC53e+pjA=
+access_token_exp: 15m
+refresh_token_exp: 14d
