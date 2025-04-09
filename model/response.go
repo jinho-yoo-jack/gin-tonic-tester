@@ -1,5 +1,7 @@
 package model
 
+import "fmt"
+
 type ApiResponse struct {
 	Status string      `json:"status"`
 	Data   interface{} `json:"data,omitempty"`
@@ -9,6 +11,14 @@ type ApiResponse struct {
 type apiError struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
+	Err     error  `json:"error"`
+}
+
+func (e *apiError) Error() string {
+	if e.Err != nil {
+		return fmt.Sprintf("%s : %v", e.Message, e.Err)
+	}
+	return e.Message
 }
 
 func Success(data interface{}) *ApiResponse {

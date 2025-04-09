@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"errors"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/model/entity"
 	"gorm.io/gorm"
 )
@@ -8,6 +9,8 @@ import (
 type UserRepository struct {
 	DB *gorm.DB
 }
+
+var ErrDuplicatedUserName = errors.New("duplicated user name")
 
 func NewUserRepository(db *gorm.DB) *UserRepository {
 	return &UserRepository{DB: db}

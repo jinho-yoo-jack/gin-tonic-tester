@@ -18,7 +18,6 @@ import (
 func NewUserRouters(authorize gin.HandlerFunc, userHandler *handler.UserHandler) func(*gin.Engine) {
 	return func(router *gin.Engine) {
 		api := router.Group("/api/v1/auth")
-		api.Use(authorize)
 		{
 			api.POST("/signup", userHandler.SignUpHandler)
 			api.POST("/signin", userHandler.SignInHandler)

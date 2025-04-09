@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/config"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/internal/middlewares"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/routes"
 	"gorm.io/gorm"
 	"log"
@@ -24,9 +25,11 @@ func NewServer(cfg *config.Config, db *gorm.DB, allRouters []func(*gin.Engine)) 
 }
 
 func (s *Server) setupRouter(routers []func(*gin.Engine)) {
-	router := gin.Default()
+	router := gin.New()
+
+	router.Use(gin.Logger())
+	router.Use(middlewares.ErrorMiddleware())
 	routes.HealthcheckRouters(router)
-	//routes.UserRouters(router, s.authorize)
 	for _, fn := range routers {
 		fn(router)
 	}
