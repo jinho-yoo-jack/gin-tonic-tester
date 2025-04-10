@@ -25,10 +25,12 @@ func NewServer(cfg *config.Config, db *gorm.DB, allRouters []func(*gin.Engine)) 
 }
 
 func (s *Server) setupRouter(routers []func(*gin.Engine)) {
+	// router := gin.Default()
 	router := gin.New()
 
 	router.Use(gin.Logger())
 	router.Use(middlewares.ErrorMiddleware())
+	router.Use(middlewares.SuccessMiddleware())
 	routes.HealthcheckRouters(router)
 	for _, fn := range routers {
 		fn(router)

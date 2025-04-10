@@ -32,9 +32,10 @@ func (h *UserHandler) SignUpHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
-	c.JSON(http.StatusOK, gin.H{"user": h.userService.SignUp(
-		service.UserInfo{UserId: req.UserId, Password: req.Password, NickName: req.NickName, Role: 1})},
-	)
+	c.Set("handler_result", h.userService.SignUp(
+		service.UserInfo{UserId: req.UserId, Password: req.Password, NickName: req.NickName, Role: 1}))
+
+	//c.JSON(http.StatusOK, gin.H{"user":},
 }
 
 func (h *UserHandler) SignInHandler(c *gin.Context) {

@@ -7,6 +7,17 @@ import (
 	"net/http"
 )
 
+func SuccessMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		defer func() {
+			fmt.Println("Success Response Handler")
+			result := c.GetHeader("handler_result")
+			c.JSON(http.StatusOK, model.Success(result))
+		}()
+		c.Next()
+	}
+}
+
 func ErrorMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
