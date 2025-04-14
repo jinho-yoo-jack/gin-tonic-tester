@@ -11,7 +11,10 @@ func SuccessMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			fmt.Println("Success Response Handler")
-			result := c.GetHeader("handler_result")
+			result, isExist := c.Get("handler_result")
+			if !isExist {
+				panic("Not Have Response Message")
+			}
 			c.JSON(http.StatusOK, model.Success(result))
 		}()
 		c.Next()

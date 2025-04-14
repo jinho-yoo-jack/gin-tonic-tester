@@ -27,7 +27,6 @@ func NewUserHandler(userService *service.UserService) *UserHandler {
 
 func (h *UserHandler) SignUpHandler(c *gin.Context) {
 	var req RequestSignUp
-
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
