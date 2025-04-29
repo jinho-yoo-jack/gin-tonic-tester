@@ -29,7 +29,7 @@ func NewUserService(ur *repository.UserRepository, ju *utils2.JwtUtils) *UserSer
 	return &UserService{ur, ju}
 }
 
-func (s *UserService) SignUp(u UserInfo) *entity.Member {
+func (s *UserService) SignUp(u *UserInfo) *entity.Member {
 	encryptedPassword, err := utils2.EncryptPassword(u.Password)
 	user := entity.Member{
 		UserId:   u.UserId,
