@@ -32,7 +32,7 @@ func (h *UserHandler) SignUpHandler(c *gin.Context) {
 	}
 
 	c.Set("handler_result", h.userService.SignUp(
-		service.UserInfo{UserId: req.UserId, Password: req.Password, NickName: req.NickName, Role: 1}))
+		&service.UserInfo{UserId: req.UserId, Password: req.Password, NickName: req.NickName, Role: 1}))
 
 	//c.JSON(http.StatusOK, gin.H{"user":},
 }
