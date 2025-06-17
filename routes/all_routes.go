@@ -2,6 +2,27 @@ package routes
 
 import "github.com/gin-gonic/gin"
 
-func AllRouters(userRouter func(*gin.Engine)) []func(*gin.Engine) {
-	return []func(*gin.Engine){userRouter}
+type Routable interface {
+	RegisterRoutes(engine *gin.Engine, authorize gin.HandlerFunc)
+}
+
+type AllRouters struct {
+	routers []Routable
+}
+
+func NewAllOfRouters(
+	userRouter *UserRouters,
+	minioRouter *MinioRouters,
+) *AllRouters {
+	return &AllRouters{
+		routers: []Routable{
+			userRouter, minioRouter,
+		},
+	}
+}
+
+func (ar *AllRouters) RegisterAllRoutes(engine *gin.Engine, authorize gin.HandlerFunc) {
+	for _, router := range ar.routers {
+		router.RegisterRoutes(engine, authorize)
+	}
 }

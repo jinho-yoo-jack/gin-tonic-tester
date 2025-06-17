@@ -2,7 +2,6 @@ package entity
 
 import (
 	"database/sql"
-	"github.com/jinho-yoo-jack/gin-tonic-tester/service"
 	"time"
 )
 
@@ -14,8 +13,4 @@ type Member struct {
 	CartId    sql.NullInt32 `gorm:"column:cart_id;null"`
 	CreatedAt time.Time     `gorm:"column:created_at"`
 	UpdatedAt time.Time     `gorm:"column:updated_at"`
-}
-
-func of(u service.UserInfo) *Member {
-	return &Member{}
 }

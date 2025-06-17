@@ -10,39 +10,40 @@ import (
 )
 
 type Server struct {
-	config *config.Config
-	db     *gorm.DB
-	router *gin.Engine
+	config      *config.Config
+	db          *gorm.DB
+	engin       *gin.Engine
+	middlewares gin.HandlerFunc
+	routers     *routes.AllRouters
 }
 
-func NewServer(cfg *config.Config, db *gorm.DB, allRouters []func(*gin.Engine)) (*Server, error) {
+func NewServer(cfg *config.Config, db *gorm.DB, middleware gin.HandlerFunc, allRouters *routes.AllRouters) (*Server, error) {
 	server := &Server{
-		config: cfg,
-		db:     db,
+		config:      cfg,
+		db:          db,
+		middlewares: middleware,
+		routers:     allRouters,
 	}
-	server.setupRouter(allRouters)
+	server.setupRouter()
 	return server, nil
 }
 
-func (s *Server) setupRouter(routers []func(*gin.Engine)) {
-	// router := gin.Default()
+func (s *Server) setupRouter() {
 	router := gin.New()
 
 	router.Use(gin.Logger())
 	router.Use(middlewares.ErrorMiddleware())
 	router.Use(middlewares.SuccessMiddleware())
 	routes.HealthcheckRouters(router)
-	for _, fn := range routers {
-		fn(router)
-	}
+	s.routers.RegisterAllRoutes(router, s.middlewares)
 
-	s.router = router
+	s.engin = router
 }
 
 // Start runs the HTTP server on a specific address.
 func (s *Server) Start(address string) {
 	//return s.router.Run(address)
-	err := s.router.Run(address)
+	err := s.engin.Run(address)
 	if err != nil {
 		log.Fatal("failed to start server:", err)
 	}

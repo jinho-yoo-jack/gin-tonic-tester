@@ -28,9 +28,14 @@ func InitializeServer() (*server.Server, error) {
 	jwtUtils := utils.NewJwtUtils(configConfig)
 	userService := service.NewUserService(userRepository, jwtUtils)
 	userHandler := handler.NewUserHandler(userService)
-	v := routes.NewUserRouters(handlerFunc, userHandler)
-	v2 := routes.AllRouters(v)
-	serverServer, err := server.NewServer(configConfig, db, v2)
+	userRouters := routes.NewUserRouters(userHandler)
+	client := config.InitMinio()
+	minioRepository := repository.NewMinioRepository(client)
+	minioService := service.NewMinioService(minioRepository)
+	minioHandler := handler.NewMinioHandler(minioService)
+	minioRouters := routes.NewMinioRouters(minioHandler)
+	allRouters := routes.NewAllOfRouters(userRouters, minioRouters)
+	serverServer, err := server.NewServer(configConfig, db, handlerFunc, allRouters)
 	if err != nil {
 		return nil, err
 	}
@@ -39,6 +44,6 @@ func InitializeServer() (*server.Server, error) {
 
 // wire.go:
 
-var ConfigSet = wire.NewSet(config.MustLoadConfig, config.InitDB, utils.NewJwtUtils)
+var ConfigSet = wire.NewSet(config.MustLoadConfig, config.InitDB, config.InitMinio, utils.NewJwtUtils)
 
 var MiddlewareSet = wire.NewSet(middlewares.NewAuthorizeMiddleware)

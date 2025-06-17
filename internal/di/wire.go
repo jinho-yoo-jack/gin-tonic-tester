@@ -18,6 +18,7 @@ import (
 var ConfigSet = wire.NewSet(
 	config.MustLoadConfig,
 	config.InitDB,
+	config.InitMinio,
 	utils.NewJwtUtils,
 )
 
@@ -30,10 +31,14 @@ func InitializeServer() (*server.Server, error) {
 		ConfigSet,
 		MiddlewareSet,
 		repository.NewUserRepository,
+		repository.NewMinioRepository,
 		service.NewUserService,
+		service.NewMinioService,
 		handler.NewUserHandler,
+		handler.NewMinioHandler,
 		routes.NewUserRouters,
-		routes.AllRouters,
+		routes.NewMinioRouters,
+		routes.NewAllOfRouters,
 		//wire.Value([]func(*gin.Engine){
 		//	routes.NewUserRouters,
 		//}),
