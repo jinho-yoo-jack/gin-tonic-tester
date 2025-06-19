@@ -1,0 +1,33 @@
+version: '3.8' # Docker Compose 파일 형식 버전
+
+services:
+  minio:
+    image: minio/minio:latest # MinIO 공식 이미지 사용 (항상 최신 버전)
+    container_name: minio-server # 컨테이너 이름 지정
+    restart: always # 컨테이너가 항상 재시작되도록 설정
+
+    ports:
+      - "9000:9000" # MinIO S3 API 포트 (외부 9000 -> 컨테이너 9000)
+      - "9001:9001" # MinIO Console (웹 UI) 포트 (외부 9001 -> 컨테이너 9001)
+
+    volumes:
+      # ./data:/data 는 현재 디렉토리 내의 data 폴더를 컨테이너의 /data 폴더로 마운트합니다.
+      # 이 폴더에 MinIO 데이터가 영구적으로 저장됩니다.
+      # macOS에서는 ~ (홈 디렉토리) 아래에 두는 것이 권장됩니다.
+      - ./data:/data
+
+    environment:
+      # MinIO 루트 사용자 계정 (기본 관리자)
+      # 실제 사용 시에는 강력하고 무작위적인 값으로 변경해야 합니다.
+      MINIO_ROOT_USER: minioadmin # 사용자 이름
+      MINIO_ROOT_PASSWORD: minioadmin # 비밀번호
+
+    command: server /data --console-address ":9001" # MinIO 서버 시작 명령어
+    # /data는 데이터를 저장할 컨테이너 내부 경로입니다.
+    # --console-address ":9001"는 웹 콘솔 포트를 9001로 설정합니다.
+
+    healthcheck: # MinIO 컨테이너의 헬스 체크 설정 (선택 사항이지만 권장)
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
