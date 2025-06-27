@@ -5,7 +5,7 @@ import (
 	"fmt"
 	utils2 "github.com/jinho-yoo-jack/gin-tonic-tester/internal/utils"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/model/entity"
-	"github.com/jinho-yoo-jack/gin-tonic-tester/repository"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/persistence/mysql"
 )
 
 type UserInfo struct {
@@ -21,11 +21,11 @@ type SignInDto struct {
 }
 
 type UserService struct {
-	userRepository *repository.UserRepository
+	userRepository *mysql.UserRepository
 	jwtUtils       *utils2.JwtUtils
 }
 
-func NewUserService(ur *repository.UserRepository, ju *utils2.JwtUtils) *UserService {
+func NewUserService(ur *mysql.UserRepository, ju *utils2.JwtUtils) *UserService {
 	return &UserService{ur, ju}
 }
 

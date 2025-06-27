@@ -9,7 +9,9 @@ import (
 	"github.com/jinho-yoo-jack/gin-tonic-tester/handler"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/internal/middlewares"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/internal/utils"
-	"github.com/jinho-yoo-jack/gin-tonic-tester/repository"
+	repository2 "github.com/jinho-yoo-jack/gin-tonic-tester/persistence/minio"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/persistence/minio/repository"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/persistence/mysql"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/routes"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/server"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/service"
@@ -18,7 +20,7 @@ import (
 var ConfigSet = wire.NewSet(
 	config.MustLoadConfig,
 	config.InitDB,
-	config.InitMinio,
+	repository2.NewMinio,
 	utils.NewJwtUtils,
 )
 
@@ -30,7 +32,7 @@ func InitializeServer() (*server.Server, error) {
 	wire.Build(
 		ConfigSet,
 		MiddlewareSet,
-		repository.NewUserRepository,
+		mysql.NewUserRepository,
 		repository.NewMinioRepository,
 		service.NewUserService,
 		service.NewMinioService,

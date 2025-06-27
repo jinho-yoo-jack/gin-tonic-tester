@@ -12,7 +12,9 @@ import (
 	"github.com/jinho-yoo-jack/gin-tonic-tester/handler"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/internal/middlewares"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/internal/utils"
-	"github.com/jinho-yoo-jack/gin-tonic-tester/repository"
+	repository2 "github.com/jinho-yoo-jack/gin-tonic-tester/persistence/minio"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/persistence/minio/repository"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/persistence/mysql"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/routes"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/server"
 	"github.com/jinho-yoo-jack/gin-tonic-tester/service"
@@ -24,12 +26,12 @@ func InitializeServer() (*server.Server, error) {
 	configConfig := config.MustLoadConfig()
 	db := config.InitDB(configConfig)
 	handlerFunc := middlewares.NewAuthorizeMiddleware(configConfig)
-	userRepository := repository.NewUserRepository(db)
+	userRepository := mysql.NewUserRepository(db)
 	jwtUtils := utils.NewJwtUtils(configConfig)
 	userService := service.NewUserService(userRepository, jwtUtils)
 	userHandler := handler.NewUserHandler(userService)
 	userRouters := routes.NewUserRouters(userHandler)
-	client := config.InitMinio()
+	client := repository2.NewMinio()
 	minioRepository := repository.NewMinioRepository(client)
 	minioService := service.NewMinioService(minioRepository)
 	minioHandler := handler.NewMinioHandler(minioService)
@@ -44,6 +46,6 @@ func InitializeServer() (*server.Server, error) {
 
 // wire.go:
 
-var ConfigSet = wire.NewSet(config.MustLoadConfig, config.InitDB, config.InitMinio, utils.NewJwtUtils)
+var ConfigSet = wire.NewSet(config.MustLoadConfig, config.InitDB, repository2.NewMinio, utils.NewJwtUtils)
 
 var MiddlewareSet = wire.NewSet(middlewares.NewAuthorizeMiddleware)

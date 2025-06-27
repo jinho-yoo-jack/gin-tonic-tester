@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
-	"github.com/jinho-yoo-jack/gin-tonic-tester/dto"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/persistence/minio/dto"
 	"github.com/minio/minio-go/v7"
 )
 

@@ -2,8 +2,8 @@ package service
 
 import (
 	"fmt"
-	"github.com/jinho-yoo-jack/gin-tonic-tester/dto"
-	"github.com/jinho-yoo-jack/gin-tonic-tester/repository"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/persistence/minio/dto"
+	"github.com/jinho-yoo-jack/gin-tonic-tester/persistence/minio/repository"
 )
 
 type MinioService struct {
